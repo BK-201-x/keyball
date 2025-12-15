@@ -84,13 +84,11 @@ void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
 
 void kana_en_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
-    if (state->pressed) {
-      tap_code(KANA_EN); // 長押しでもかな固定
-    } else {
-      tap_code(KANA_EN); // 1回タップ
-    }
+    // 1回タップ：かな
+    tap_code(KC_LANG1);
   } else if (state->count == 2) {
-    tap_code(KC_LANG2); // 2回タップ
+    // 2回タップ：英数
+    tap_code(KC_LNG2);
   }
 }
 

@@ -27,6 +27,30 @@ enum custom_keycodes {
 };
 
 /* =========================
+ * Tap Dance ID
+ * ========================= */
+enum {
+  TD_TG1_TG3,
+};
+
+/* =========================
+ * Tap Dance Functions
+ * ========================= */
+void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    if (state->interrupted || !state->pressed) {
+      layer_invert(1);   // 1タップ
+    } else {
+      layer_invert(3);   // 長押し
+    }
+  }
+}
+
+tap_dance_action_t tap_dance_actions[] = {
+          [TD_TG1_TG3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tg1_tg3_finished, NULL),
+        };
+
+/* =========================
  * Keymaps
  * ========================= */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -40,10 +64,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             ),
           
           [1] = LAYOUT_universal(
-            _______, _______, _______, _______, _______, _______,               _______, KC_F7, KC_F8, _______, _______, _______,
-            _______, _______, _______, KC_UP, _______, _______,               _______, _______, KC_UP, _______, _______, _______,
-            _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,              _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
-            _______, _______, _______, _______, _______,               _______, _______, _______, _______, _______
+            _______, _______, _______, _______, _______, _______,           _______, KC_F7, KC_F8, _______, _______, _______,
+            _______, _______, _______, KC_UP, _______, _______,           _______, _______, KC_UP, _______, _______, _______,
+            _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,          _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
+            _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
             ),
           
           [2] = LAYOUT_universal(
@@ -54,32 +78,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             ),
           
           [3] = LAYOUT_universal(
-            RGB_TOG, _______, _______, _______, _______, _______,               _______, _______, _______, _______, _______, _______,
-            RGB_MOD, _______, _______, _______, _______, _______,               _______, _______, _______, _______, _______, _______,
-            RGB_RMOD, _______, _______, _______, _______, _______,              _______, _______, _______, _______, _______, _______,
-            QK_BOOT, KBC_RST, _______, _______, _______,               _______, _______, _______, KBC_RST, QK_BOOT
+            RGB_TOG, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______,
+            RGB_MOD, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______,
+            RGB_RMOD, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______,
+            QK_BOOT, KBC_RST, _______, _______, _______,           _______, _______, _______, KBC_RST, QK_BOOT
             ),
-        };
-
-/* =========================
- * Tap Dance
- * ========================= */
-enum {
-  TD_TG1_TG3,
-};
-
-void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    if (state->interrupted || !state->pressed) {
-      layer_invert(1);   // 1タップ
-    } else {
-      layer_invert(3);   // 長押し
-    }
-  }
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-          [TD_TG1_TG3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tg1_tg3_finished, NULL),
         };
 
 /* =========================

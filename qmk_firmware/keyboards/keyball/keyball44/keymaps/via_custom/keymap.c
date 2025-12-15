@@ -24,14 +24,47 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * ========================= */
 enum custom_keycodes {
   NUBS_AT_GRV = SAFE_RANGE,
+  KANA_EN,
 };
 
 /* =========================
- * Tap Dance ID
+ * Tap Dance Enum
  * ========================= */
 enum {
   TD_TG1_TG3,
+  TD_KANA_EN,
 };
+
+/* =========================
+ * Keymaps
+ * ========================= */
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+          [0] = LAYOUT_universal(
+            KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,             KC_Y, KC_U, KC_I, KC_O, KC_P, KC_DEL,
+            KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G,             KC_H, KC_J, KC_K, KC_L, KC_SCLN, NUBS_AT_GRV,
+            KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,            KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_INT1,
+            KC_LALT, KC_LGUI, TD(TD_TG1_TG3), LT(1, KC_SPC), TD(TD_KANA_EN),
+            KC_BSPC, LT(2, KC_ENT), KC_RCTL, KC_RALT, KC_PSCR
+            ),
+          [1] = LAYOUT_universal(
+            _______, _______, _______, _______, _______, _______,            _______, KC_F7, KC_F8, _______, _______, _______,
+            _______, _______, _______, KC_UP, _______, _______,             _______, _______, KC_UP, _______, _______, _______,
+            _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,           _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
+            _______, _______, _______, _______, _______,             _______, _______, _______, _______, _______
+            ),
+          [2] = LAYOUT_universal(
+            _______, _______, KC_7, KC_8, KC_9, _______,            _______, _______, _______, _______, _______, _______,
+            _______, _______, KC_4, KC_5, KC_6, _______,            _______, _______, _______, _______, _______, _______,
+            _______, _______, KC_1, KC_2, KC_3, _______,            _______, _______, _______, _______, _______, _______,
+            KC_0, KC_DOT, _______, _______, _______,              KC_DEL, _______, _______, _______, _______
+            ),
+          [3] = LAYOUT_universal(
+            RGB_TOG, _______, _______, _______, _______, _______,             _______, _______, _______, _______, _______, _______,
+            RGB_MOD, _______, _______, _______, _______, _______,             _______, _______, _______, _______, _______, _______,
+            RGB_RMOD, _______, _______, _______, _______, _______,            _______, _______, _______, _______, _______, _______,
+            QK_BOOT, KBC_RST, _______, _______, _______,             _______, _______, _______, KBC_RST, QK_BOOT
+            ),
+        };
 
 /* =========================
  * Tap Dance Functions
@@ -39,59 +72,41 @@ enum {
 void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     if (state->interrupted || !state->pressed) {
-      layer_invert(1);   // 1タップ
+      layer_invert(1);  // 1回タップ
     } else {
-      layer_invert(3);   // 長押し
+      layer_invert(3);  // 長押し
     }
+  } else if (state->count == 2) {
+    layer_invert(1);
+    layer_invert(3);
   }
 }
 
-tap_dance_action_t tap_dance_actions[] = {
-          [TD_TG1_TG3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tg1_tg3_finished, NULL),
-        };
+void kana_en_finished(tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    if (state->pressed) {
+      tap_code(KANA_EN); // 長押しでもかな固定
+    } else {
+      tap_code(KANA_EN); // 1回タップ
+    }
+  } else if (state->count == 2) {
+    tap_code(KC_LANG2); // 2回タップ
+  }
+}
 
 /* =========================
- * Keymaps
+ * Tap Dance Actions
  * ========================= */
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-          
-          [0] = LAYOUT_universal(
-            KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,                KC_Y, KC_U, KC_I, KC_O, KC_P, KC_DEL,
-            KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G,                KC_H, KC_J, KC_K, KC_L, KC_SCLN, NUBS_AT_GRV,
-            KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,               KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_INT1,
-            KC_LALT, KC_LGUI, TD(TD_TG1_TG3), LT(1,KC_SPC), LT(3,KC_LNG1),
-            KC_BSPC, LT(2,KC_ENT), KC_RCTL, KC_RALT, KC_PSCR
-            ),
-          
-          [1] = LAYOUT_universal(
-            _______, _______, _______, _______, _______, _______,           _______, KC_F7, KC_F8, _______, _______, _______,
-            _______, _______, _______, KC_UP, _______, _______,           _______, _______, KC_UP, _______, _______, _______,
-            _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,          _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
-            _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
-            ),
-          
-          [2] = LAYOUT_universal(
-            _______, _______, KC_7, KC_8, KC_9, _______,                _______, _______, _______, _______, _______, _______,
-            _______, _______, KC_4, KC_5, KC_6, _______,                _______, _______, _______, _______, _______, _______,
-            _______, _______, KC_1, KC_2, KC_3, _______,                _______, _______, _______, _______, _______, _______,
-            KC_0, KC_DOT, _______, _______, _______,              KC_DEL, _______, _______, _______, _______
-            ),
-          
-          [3] = LAYOUT_universal(
-            RGB_TOG, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______,
-            RGB_MOD, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______,
-            RGB_RMOD, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______,
-            QK_BOOT, KBC_RST, _______, _______, _______,           _______, _______, _______, KBC_RST, QK_BOOT
-            ),
+tap_dance_action_t tap_dance_actions[] = {
+          [TD_TG1_TG3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tg1_tg3_finished, NULL),
+          [TD_KANA_EN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kana_en_finished, NULL),
         };
 
 /* =========================
  * process_record_user
  * ========================= */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  
   switch (keycode) {
-    
   case NUBS_AT_GRV:
     if (record->event.pressed) {
       if (get_mods() & MOD_MASK_SHIFT) {

@@ -24,7 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * ========================= */
 enum custom_keycodes {
   NUBS_AT_GRV = SAFE_RANGE,
-  KANA_EN,
 };
 
 /* =========================
@@ -46,24 +45,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_LALT, KC_LGUI, TD(TD_TG1_TG3), LT(1, KC_SPC), TD(TD_KANA_EN),
             KC_BSPC, LT(2, KC_ENT), KC_RCTL, KC_RALT, KC_PSCR
             ),
-          [1] = LAYOUT_universal(
-            _______, _______, _______, _______, _______, _______,            _______, KC_F7, KC_F8, _______, _______, _______,
-            _______, _______, _______, KC_UP, _______, _______,             _______, _______, KC_UP, _______, _______, _______,
-            _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,           _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
-            _______, _______, _______, _______, _______,             _______, _______, _______, _______, _______
-            ),
-          [2] = LAYOUT_universal(
-            _______, _______, KC_7, KC_8, KC_9, _______,            _______, _______, _______, _______, _______, _______,
-            _______, _______, KC_4, KC_5, KC_6, _______,            _______, _______, _______, _______, _______, _______,
-            _______, _______, KC_1, KC_2, KC_3, _______,            _______, _______, _______, _______, _______, _______,
-            KC_0, KC_DOT, _______, _______, _______,              KC_DEL, _______, _______, _______, _______
-            ),
-          [3] = LAYOUT_universal(
-            RGB_TOG, _______, _______, _______, _______, _______,             _______, _______, _______, _______, _______, _______,
-            RGB_MOD, _______, _______, _______, _______, _______,             _______, _______, _______, _______, _______, _______,
-            RGB_RMOD, _______, _______, _______, _______, _______,            _______, _______, _______, _______, _______, _______,
-            QK_BOOT, KBC_RST, _______, _______, _______,             _______, _______, _______, KBC_RST, QK_BOOT
-            ),
         };
 
 /* =========================
@@ -72,9 +53,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     if (state->interrupted || !state->pressed) {
-      layer_invert(1);  // 1回タップ
+      layer_invert(1);   // 1回タップ
     } else {
-      layer_invert(3);  // 長押し
+      layer_invert(3);   // 長押し
     }
   } else if (state->count == 2) {
     layer_invert(1);
@@ -85,10 +66,10 @@ void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
 void kana_en_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     // 1回タップ：かな
-    tap_code(KC_LNG1);   // KC_LANG1 → KC_LNG1 に修正
+    tap_code(KC_LNG1);
   } else if (state->count == 2) {
     // 2回タップ：英数
-    tap_code(KC_LNG2);   // 既に KC_LNG2 なので変更不要
+    tap_code(KC_LNG2);
   }
 }
 
@@ -107,18 +88,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
   case NUBS_AT_GRV:
     if (record->event.pressed) {
-      if (get_mods() & MOD_MASK_SHIFT) {
-        tap_code(KC_GRV);        // 半角/全角
+      uint8_t mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        // Shift 押下時：半角/全角
+        clear_mods();
+        tap_code(KC_GRV);
+        set_mods(mods);
       } else {
-        tap_code16(S(KC_2));    // @
+        // Shiftなし：@
+        tap_code16(S(KC_2));
       }
     }
     return false;
   }
   return true;
-}
-
-/* =========================
+}/* =========================
  * COMBO
  * ========================= */
 #ifdef COMBO_ENABLE

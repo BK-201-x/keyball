@@ -35,28 +35,14 @@ enum {
 };
 
 /* =========================
- * Keymaps
- * ========================= */
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-          [0] = LAYOUT_universal(
-            KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,          KC_Y, KC_U, KC_I, KC_O, KC_P, KC_DEL,
-            KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G,          KC_H, KC_J, KC_K, KC_L, KC_SCLN, NUBS_AT_GRV,
-            KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,         KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_INT1,
-            KC_LALT, KC_LGUI, TD(TD_TG1_TG3), LT(1, KC_SPC), TD(TD_KANA_EN),
-            KC_BSPC, LT(2, KC_ENT), KC_RCTL, KC_RALT, KC_PSCR
-            ),
-          // 他のレイヤー省略
-        };
-
-/* =========================
  * Tap Dance Functions
  * ========================= */
 void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     if (state->interrupted || !state->pressed) {
-      layer_invert(1);
+      layer_invert(1);  // 1回タップ
     } else {
-      layer_invert(3);
+      layer_invert(3);  // 長押し
     }
   } else if (state->count == 2) {
     layer_invert(1);
@@ -66,11 +52,9 @@ void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
 
 void kana_en_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
-    // Mac: かな切替
-    tap_code(KC_GRV); 
+    tap_code(KC_LNG1);  // かな
   } else if (state->count == 2) {
-    // Mac: 英数切替
-    tap_code(KC_GRV); 
+    tap_code(KC_LNG2);  // 英数
   }
 }
 
@@ -89,15 +73,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
   case NUBS_AT_GRV:
     if (record->event.pressed) {
+      return false; // 押下時は何もしない
+    } else {
       if (get_mods() & MOD_MASK_SHIFT) {
-        // Shift押下で英数/かな切替（Mac用）
-        tap_code(KC_GRV);
+        tap_code(KC_GRV);      // Shift + NUBS -> 半角/全角
       } else {
-        // @
-        tap_code16(S(KC_2));
+        tap_code16(S(KC_2));  // NUBSのみ -> @
       }
+      return false;
     }
-    return false;
   }
   return true;
 }

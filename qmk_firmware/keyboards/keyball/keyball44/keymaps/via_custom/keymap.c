@@ -85,10 +85,10 @@ void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
 void kana_en_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     // 1回タップ：かな
-    tap_code(KC_LANG1);
+    tap_code(KC_LNG1);   // KC_LANG1 → KC_LNG1 に修正
   } else if (state->count == 2) {
     // 2回タップ：英数
-    tap_code(KC_LNG2);
+    tap_code(KC_LNG2);   // 既に KC_LNG2 なので変更不要
   }
 }
 

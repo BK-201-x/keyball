@@ -68,7 +68,7 @@ enum {
   TD_TG1_TG3,
 };
 
-void tg1_tg3_finished(qk_tap_dance_state_t *state, void *user_data) {
+void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     if (state->interrupted || !state->pressed) {
       layer_invert(1);   // 1タップ
@@ -78,14 +78,9 @@ void tg1_tg3_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
-          [TD_TG1_TG3] = ACTION_TAP_DANCE_FN_ADVANCED(
-            NULL,
-            tg1_tg3_finished,
-            NULL
-            ),
+tap_dance_action_t tap_dance_actions[] = {
+          [TD_TG1_TG3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tg1_tg3_finished, NULL),
         };
-
 
 /* =========================
  * process_record_user

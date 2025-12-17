@@ -12,7 +12,7 @@ enum custom_keycodes {
 };
 
 static uint16_t kana_timer;
-static bool kana_waiting = false;
+static uint8_t kana_count = 0;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           
@@ -51,21 +51,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (keycode == KANA_EISU && record->event.pressed) {
-    if (kana_waiting && timer_elapsed(kana_timer) < TAPPING_TERM) {
-      kana_waiting = false;
-      tap_code(KC_LNG2); // 英数
-    } else {
-      kana_waiting = true;
+    
+    kana_count++;
+    
+    if (kana_count == 1) {
       kana_timer = timer_read();
+    } else if (kana_count == 2 && timer_elapsed(kana_timer) < TAPPING_TERM) {
+      kana_count = 0;
+      tap_code(KC_LNG2); // 英数
     }
+    
     return false;
   }
+  
   return true;
 }
 
 void matrix_scan_user(void) {
-  if (kana_waiting && timer_elapsed(kana_timer) > TAPPING_TERM) {
-    kana_waiting = false;
+  if (kana_count == 1 && timer_elapsed(kana_timer) > TAPPING_TERM) {
+    kana_count = 0;
     tap_code(KC_LNG1); // かな
   }
 }

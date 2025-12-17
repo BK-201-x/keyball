@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "quantum.h"
-#include "tap_dance.h" // Tap Dance機能のインクルード
+#include "tap_dance.h" 
+// Tap Dance機能のインクルード
 
 // ---------------------------------------------------------
 // ■ 1. グローバル定義（トップレベル）

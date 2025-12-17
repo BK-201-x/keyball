@@ -1,20 +1,17 @@
 #include QMK_KEYBOARD_H
 #include "quantum.h"
 
-
 /* =========================================================
  * Tap Dance 定義
  * ========================================================= */
 
-// Tap Dance ID
 enum {
   TD_KANA_EISU,
 };
 
-// Tap Dance 動作定義
 // 1回押し → かな（KC_LNG2）
 // 2回押し → 英数（KC_LNG1）
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
           [TD_KANA_EISU] = ACTION_TAP_DANCE_DOUBLE(KC_LNG2, KC_LNG1),
         };
 
@@ -53,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             ),
           
           /* =========================================================
-   * Layer 3 : RGB / Mouse
+   * Layer 3
    * ========================================================= */
           [3] = LAYOUT_universal(
             RGB_TOG  , AML_TO   , AML_I50  , AML_D50  , _______  , _______  ,                                        RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,

@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "quantum.h"
+#include "tap_dance.h"
 
 enum {
   TD_KANA_EISU,

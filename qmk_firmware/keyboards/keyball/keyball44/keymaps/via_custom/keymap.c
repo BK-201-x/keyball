@@ -1,27 +1,25 @@
 #include QMK_KEYBOARD_H
 #include "quantum.h"
-#include "process_keycode/process_tap_dance.h"
-// Tap Dance機能のインクルード
+
+// ★GitHubビルドでのパス問題を解決する記述
+#include "process_keycode/process_tap_dance.h" 
 
 // ---------------------------------------------------------
 // ■ 1. グローバル定義
 // ---------------------------------------------------------
 
-// Tap Dance 識別子
 enum {
   TD_KANA_EISU,
 };
 
-// コンボイベント識別子
 enum combo_events {
-  KL_BTN1, // K + L -> Btn1
-  LS_BTN2, // L + ; -> Btn2
+  KL_BTN1, 
+  LS_BTN2, 
   QW_ESC,
   MY_F7,
   YU_F8,
 };
 
-// マウスボタンの状態管理
 static bool is_btn1_locked = false;
 static bool is_btn2_locked = false;
 
@@ -47,12 +45,11 @@ void toggle_mouse_btn2(void) {
   }
 }
 
-// Tap Dance コールバック
 void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
-    tap_code(KC_LNG1); // かな
+    tap_code(KC_LNG1);
   } else if (state->count == 2) {
-    tap_code(KC_LNG2); // 英数
+    tap_code(KC_LNG2);
   }
 }
 
@@ -60,12 +57,10 @@ void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
 // ■ 3. 配列定義
 // ---------------------------------------------------------
 
-// Tap Dance アクション配列
 tap_dance_action_t tap_dance_actions[] = {
           [TD_KANA_EISU] = ACTION_TAP_DANCE_FN(kana_eisu_finished),
         };
 
-// コンボ設定
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_ls[] = {KC_L, KC_SCLN, COMBO_END};
@@ -100,18 +95,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-    // 特殊コンボ処理 (9/6 + Btn1 ロック解除)
+    // 9/6 + Btn1 ロック中なら解除
     if ((keycode == KC_9 || keycode == KC_6) && is_btn1_locked) {
       toggle_mouse_btn1();
     }
-    // Btn1ロック中の Btn2(;)トグル
+    // Btn1ロック中に ; を押したら Btn2をトグル
     if (keycode == KC_SCLN && is_btn1_locked) {
       toggle_mouse_btn2();
       return false;
     }
   }
   
-  // Keyball スクロール処理
   switch (keycode) {
   case KC_BSPC:
     if (layer_state_is(0) || layer_state_is(1)) {
@@ -173,148 +167,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             QK_BOOT , KBC_RST , _______ , _______ , _______ ,                            _______ , _______ , _______ , KBC_RST , QK_BOOT
             ),
         };
-
-// clang-format on
-
-void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    tap_code(KC_LNG1); // かな
-  } else if (state->count == 2) {
-    tap_code(KC_LNG2); // 英数
-  }
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-          [TD_KANA_EISU] = ACTION_TAP_DANCE_FN(kana_eisu_finished),
-        };
-
-// --- ★修正: process_record_user に特殊コンボロジックを追加 ---
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  
-  // 1. 特殊コンボ処理（定義: 9/6 + Btn1, Btn1 + Btn2）
-  if (record->event.pressed) {
-    // • 9 + Btn1 -> Btn1 (トグル)
-    if (keycode == KC_9) {
-      // 9を押したとき、既にBtn1がロック中ならトグル（解除/再ロック）
-      if (is_btn1_locked) {
-        toggle_mouse_btn1();
-        return true; // 9の移動機能はそのまま活かす
-      }
-    }
-    
-    // • 6 + Btn1 -> Btn1 (トグル)
-    if (keycode == KC_6) {
-      if (is_btn1_locked) {
-        toggle_mouse_btn1();
-        return true; 
-      }
-    }
-    
-    // • Btn1 + Btn2 -> Btn2 (トグル)
-    // Btn2のキー(;)が押されたとき、Btn1がロック中ならBtn2をトグル
-    if (keycode == KC_SCLN) { 
-      if (is_btn1_locked) {
-        toggle_mouse_btn2(); 
-        return false; // ';' の入力を防ぐ
-      }
-    }
-  }
-  
-  // 2. 既存のスクロール処理
-  switch (keycode) {
-  case KC_BSPC:
-    if (layer_state_is(0) || layer_state_is(1)) {
-      if (record->event.pressed) {
-        keyball_set_scroll_mode(true);
-      } else {
-        // レイヤー3でなければ戻す
-        if (get_highest_layer(layer_state) != 3) {
-          keyball_set_scroll_mode(false);
-        }
-      }
-    }
-    return true;
-  }
-  return true;
-}
-
-#ifdef COMBO_ENABLE
-// --- ★修正: コンボイベント定義 ---
-enum combo_events {
-  // ご要望のドラッグ・トグル用
-  KL_BTN1, // K + L -> Btn1
-  LS_BTN2, // L + ; -> Btn2 (L + : も兼ねる)
-  
-  // 既存の単発キー
-  QW_ESC,
-  MY_F7,
-  YU_F8,
-};
-
-// コンボキーの組み合わせ定義
-const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
-const uint16_t PROGMEM combo_ls[] = {KC_L, KC_SCLN, COMBO_END};
-const uint16_t PROGMEM combo_qw[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM combo_my[] = {KC_MINS, KC_Y, COMBO_END};
-const uint16_t PROGMEM combo_yu[] = {KC_Y, KC_U, COMBO_END};
-
-combo_t key_combos[] = {
-          // ★修正: 新しいドラッグ用コンボを割り当て
-          [KL_BTN1] = COMBO_ACTION(combo_kl),
-          [LS_BTN2] = COMBO_ACTION(combo_ls),
-          
-          [QW_ESC] = COMBO_ACTION(combo_qw),
-          [MY_F7]  = COMBO_ACTION(combo_my),
-          [YU_F8]  = COMBO_ACTION(combo_yu),
-        };
-#endif
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-  // Auto enable scroll mode when the highest layer is 3
-  keyball_set_scroll_mode(get_highest_layer(state) == 3);
-  return state;
-}
-
-#ifdef OLED_ENABLE
-#    include "lib/oledkit/oledkit.h"
-void oledkit_render_info_user(void) {
-  keyball_oled_render_keyinfo();
-  keyball_oled_render_ballinfo();
-  keyball_oled_render_layerinfo();
-}
-#endif
-
-#ifdef COMBO_ENABLE
-// --- ★修正: コンボ実行時の処理 ---
-void process_combo_event(uint16_t combo_index, bool pressed) {
-  // コンボは押下時のみトリガーし、あとはトグル関数に任せる
-  if (pressed) {
-    switch (combo_index) {
-      
-      // • K + L -> Btn1 (トグル)
-    case KL_BTN1:
-      toggle_mouse_btn1();
-      break;
-      
-      // • L + ; -> Btn2 (トグル)
-      // • L + : -> Btn2 (Shift押下時もここで反応)
-    case LS_BTN2:
-      toggle_mouse_btn2();
-      break;
-      
-      // --- 単発キー系 ---
-    case QW_ESC:
-      tap_code(KC_ESC);
-      break;
-      
-    case MY_F7:
-      tap_code(KC_F7);
-      break;
-      
-    case YU_F8:
-      tap_code(KC_F8);
-      break;
-    }
-  }
-}
-#endif

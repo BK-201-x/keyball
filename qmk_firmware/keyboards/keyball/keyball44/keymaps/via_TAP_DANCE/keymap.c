@@ -7,7 +7,6 @@ enum {
   TD_KANA_EISU,
 };
 
-// 1回押し: かな / 2回以上: 英数（安全側）
 void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     tap_code(KC_LNG1); // かな
@@ -31,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_TAB , KC_A , KC_S , KC_D , KC_F , KC_G ,                         KC_H , KC_J , KC_K , KC_L , KC_SCLN, S(KC_7),
             KC_LSFT, KC_Z , KC_X , KC_C , KC_V , KC_B ,                         KC_N , KC_M , KC_COMM, KC_DOT , KC_SLSH, KC_INT1,
             TD(TD_KANA_EISU), KC_LALT, LCTL_T(KC_LNG2), LT(1,KC_SPC),
-            KC_BSPC, LT(2,KC_ENT), RCTL_T(KC_LNG2), KC_RALT, KC_PSCR
+            KC_BSPC, LT(2,KC_ENT), RCTL_T(KC_LNG2), KC_RALT, KC_PSCR, KC_NO
             ),
           
           [1] = LAYOUT_universal(
@@ -54,6 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             RGB_RMOD, RGB_HUD, RGB_SAD, RGB_VAD, _______, SCRL_DVD,            CPI_D1K, CPI_D100, CPI_I100, CPI_I1K, _______, KBC_SAVE,
             QK_BOOT, KBC_RST, _______, _______, _______,                      _______, _______, _______, KBC_RST, QK_BOOT
             ),
+          
         };
 // clang-format on
 

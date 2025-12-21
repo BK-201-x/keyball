@@ -1,3 +1,5 @@
+#define TAPPING_TERM 300
+
 #include QMK_KEYBOARD_H
 
 enum {

@@ -2,12 +2,22 @@
 
 #include QMK_KEYBOARD_H
 
-// =====================================================
-// Custom keycodes
-// =====================================================
-enum custom_keycodes {
-  KANA_EISU = SAFE_RANGE,
+enum {
+  TD_KANA_EISU = 0,
 };
+
+void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_LNG1); // かな
+  } else {
+    tap_code(KC_LNG2); // 英数
+  }
+}
+
+/* ★ static なし / ifdef なし / 名前固定 */
+tap_dance_action_t tap_dance_actions[] = {
+          [TD_KANA_EISU] = ACTION_TAP_DANCE_FN(kana_eisu_finished),
+        };
 
 // =====================================================
 // KANA / EISU tap-count state

@@ -1,11 +1,13 @@
-#define TAPPING_TERM 300
-
 #include QMK_KEYBOARD_H
 
+// =====================================================
+// Tap Dance 定義
+// =====================================================
 enum {
-  TD_KANA_EISU = 0,
+  TD_KANA_EISU,
 };
 
+// 1回押し: かな / 2回以上: 英数（安全側）
 void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     tap_code(KC_LNG1); // かな
@@ -14,36 +16,22 @@ void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
   }
 }
 
-/* ★ static なし / ifdef なし / 名前固定 */
 tap_dance_action_t tap_dance_actions[] = {
           [TD_KANA_EISU] = ACTION_TAP_DANCE_FN(kana_eisu_finished),
         };
 
 // =====================================================
-// KANA / EISU tap-count state
-// =====================================================
-static uint16_t kana_timer = 0;
-static uint8_t  kana_count = 0;
-
-// =====================================================
 // Keymaps
 // =====================================================
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           
           [0] = LAYOUT_universal(
-            // ---------------- Left ----------------
-            KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,
-            KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,
-            KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,
-            TD(TD_KANA_EISU), KC_LALT,   // ← ここが「かな / 英数」
-            
-            // ---------------- Right ----------------
-            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-            KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
-            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-            KC_SPC,  KC_RALT
+            KC_ESC , KC_Q , KC_W , KC_E , KC_R , KC_T ,                         KC_Y , KC_U , KC_I , KC_O , KC_P , KC_DEL ,
+            KC_TAB , KC_A , KC_S , KC_D , KC_F , KC_G ,                         KC_H , KC_J , KC_K , KC_L , KC_SCLN, S(KC_7),
+            KC_LSFT, KC_Z , KC_X , KC_C , KC_V , KC_B ,                         KC_N , KC_M , KC_COMM, KC_DOT , KC_SLSH, KC_INT1,
+            TD(TD_KANA_EISU), KC_LALT, LCTL_T(KC_LNG2), LT(1,KC_SPC),
+            KC_BSPC, LT(2,KC_ENT), RCTL_T(KC_LNG2), KC_RALT, KC_PSCR
             ),
           
           [1] = LAYOUT_universal(
@@ -66,7 +54,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             RGB_RMOD, RGB_HUD, RGB_SAD, RGB_VAD, _______, SCRL_DVD,            CPI_D1K, CPI_D100, CPI_I100, CPI_I1K, _______, KBC_SAVE,
             QK_BOOT, KBC_RST, _______, _______, _______,                      _______, _______, _______, KBC_RST, QK_BOOT
             ),
-          
         };
 // clang-format on
 
@@ -76,34 +63,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 layer_state_t layer_state_set_user(layer_state_t state) {
   keyball_set_scroll_mode(get_highest_layer(state) == 3);
   return state;
-}
-
-// =====================================================
-// KANA / EISU multi-tap logic (VIA safe)
-// =====================================================
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (keycode == KANA_EISU) {
-    if (record->event.pressed) {
-      if (timer_elapsed(kana_timer) > TAPPING_TERM) {
-        kana_count = 0;
-      }
-      kana_timer = timer_read();
-      kana_count++;
-    }
-    return false;
-  }
-  return true;
-}
-
-void matrix_scan_user(void) {
-  if (kana_count > 0 && timer_elapsed(kana_timer) > TAPPING_TERM) {
-    if (kana_count == 1) {
-      tap_code(KC_LNG1); // かな
-    } else {
-      tap_code(KC_LNG2); // 英数
-    }
-    kana_count = 0;
-  }
 }
 
 // =====================================================

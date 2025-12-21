@@ -1,14 +1,20 @@
 #define TAPPING_TERM 300
-
 #include QMK_KEYBOARD_H
 
 enum {
   TD_KANA_EISU,
 };
 
+void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_LNG1); // かな
+  } else {
+    tap_code(KC_LNG2); // 英数（2回以上・連打含む）
+  }
+}
+
 tap_dance_action_t tap_dance_actions[] = {
-          // 1回 = かな / 2回以上 = 英数
-          [TD_KANA_EISU] = ACTION_TAP_DANCE_DOUBLE(KC_LNG1, KC_LNG2),
+          [TD_KANA_EISU] = ACTION_TAP_DANCE_FN(NULL, kana_eisu_finished),
         };
 
 // =============================

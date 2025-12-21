@@ -1,32 +1,12 @@
 #include QMK_KEYBOARD_H
 
-// =============================
-// Tap Dance 定義
-// =============================
 enum {
   TD_KANA_EISU,
 };
 
-// Tap Dance 判定
-void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    // かな
-    tap_code(KC_LNG1);
-  } else {
-    // 2回以上はすべて英数（安全側）
-    tap_code(KC_LNG2);
-  }
-}
-
-void kana_eisu_reset(tap_dance_state_t *state, void *user_data) {}
-
-// Tap Dance 設定
 tap_dance_action_t tap_dance_actions[] = {
-          [TD_KANA_EISU] = ACTION_TAP_DANCE_FN_ADVANCED(
-            NULL,
-            kana_eisu_finished,
-            kana_eisu_reset
-            ),
+          // 1回 = かな / 2回以上 = 英数
+          [TD_KANA_EISU] = ACTION_TAP_DANCE_DOUBLE(KC_LNG1, KC_LNG2),
         };
 
 // =============================

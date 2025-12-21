@@ -52,9 +52,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (keycode == KANA_EISU) {
     if (!record->event.pressed) {
-      // key release
       kana_taps++;
-      kana_timer = timer_read(); // ★ 毎回更新するのが重要
+      kana_timer = timer_read();
       kana_wait  = true;
     }
     return false;
@@ -64,11 +63,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void matrix_scan_user(void) {
   if (kana_wait && timer_elapsed(kana_timer) > TAPPING_TERM) {
+    
     if (kana_taps == 1) {
-      tap_code(KC_LNG1); // かな
+      // かな
+      register_code(KC_LNG1);
+      unregister_code(KC_LNG1);
     } else {
-      tap_code(KC_LNG2); // 英数（2回以上）
+      // 英数（2回以上は全て英数）
+      register_code(KC_LNG2);
+      unregister_code(KC_LNG2);
     }
+    
     kana_taps = 0;
     kana_wait = false;
   }

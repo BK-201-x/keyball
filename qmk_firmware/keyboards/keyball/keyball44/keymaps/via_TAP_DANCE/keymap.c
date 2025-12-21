@@ -52,9 +52,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (keycode == KANA_EISU) {
     if (!record->event.pressed) {
+      if (kana_taps == 0) {
+        kana_timer = timer_read(); // ★ 最初だけ
+      }
       kana_taps++;
-      kana_timer = timer_read();
-      kana_wait  = true;
+      kana_wait = true;
     }
     return false;
   }
@@ -69,7 +71,7 @@ void matrix_scan_user(void) {
       register_code(KC_LNG1);
       unregister_code(KC_LNG1);
     } else {
-      // 英数（2回以上は全て英数）
+      // 英数（2回以上すべて）
       register_code(KC_LNG2);
       unregister_code(KC_LNG2);
     }

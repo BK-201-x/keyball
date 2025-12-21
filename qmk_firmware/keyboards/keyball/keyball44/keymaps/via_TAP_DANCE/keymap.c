@@ -68,12 +68,12 @@ void matrix_scan_user(void) {
     
     if (kana_taps == 1) {
       // かな
-      register_code(KC_LNG1);
-      unregister_code(KC_LNG1);
+      tap_code(KC_LNG1);
     } else {
-      // 英数（2回以上すべて）
-      register_code(KC_LNG2);
-      unregister_code(KC_LNG2);
+      // 英数（Ctrl + Space）
+      register_code(KC_LCTL);
+      tap_code(KC_SPC);
+      unregister_code(KC_LCTL);
     }
     
     kana_taps = 0;

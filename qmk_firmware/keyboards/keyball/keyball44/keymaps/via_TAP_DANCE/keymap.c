@@ -6,8 +6,8 @@ enum custom_keycodes {
   KANA_EISU = SAFE_RANGE,
 };
 
-static uint16_t kana_timer;
-static uint8_t  kana_count;
+static uint16_t kana_timer = 0;
+static uint8_t  kana_taps  = 0;
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -51,24 +51,26 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (keycode == KANA_EISU) {
     if (record->event.pressed) {
-      kana_count++;
-      if (kana_count == 1) {
+      if (kana_taps == 0) {
         kana_timer = timer_read();
       }
+    } else {
+      // key release
+      kana_taps++;
     }
-    return false; // 押下・解放どちらも通常処理させない
+    return false;
   }
   return true;
 }
 
 void matrix_scan_user(void) {
-  if (kana_count > 0 && timer_elapsed(kana_timer) > TAPPING_TERM) {
-    if (kana_count == 1) {
+  if (kana_taps > 0 && timer_elapsed(kana_timer) > TAPPING_TERM) {
+    if (kana_taps == 1) {
       tap_code(KC_LNG1); // かな
     } else {
-      tap_code(KC_LNG2); // 英数
+      tap_code(KC_LNG2); // 英数（2回以上）
     }
-    kana_count = 0;
+    kana_taps = 0;
   }
 }
 

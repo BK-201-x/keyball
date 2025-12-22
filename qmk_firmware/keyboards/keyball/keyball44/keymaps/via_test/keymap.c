@@ -1,147 +1,311 @@
 #include QMK_KEYBOARD_H
-#include "quantum.h"
 
-/* =========================
- * Custom Keycodes
- * ========================= */
-enum custom_keycodes {
-  NUBS_AT_GRV = SAFE_RANGE,
-};
-
-/* =========================
- * Tap Dance Enum
- * ========================= */
+// =====================================================
+// Tap Dance 定義
+// =====================================================
 enum {
-  TD_TG1_TG3,
-  TD_KANA_EN,
+  TD_KANA_EISU,
 };
 
-/* =========================
- * Extern for keymap introspection
- * ========================= */
-#ifdef KEYMAP_INTSPECT
-extern const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS];
-#endif
+void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_LNG1); // かな
+  } else {
+    tap_code(KC_LNG2); // 英数
+  }
+}
 
-/* =========================
- * Keymaps
- * ========================= */
+tap_dance_action_t tap_dance_actions[] = {
+          [TD_KANA_EISU] = ACTION_TAP_DANCE_FN(kana_eisu_finished),
+        };
+
+// =====================================================
+// Keymaps
+// =====================================================
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+          
           [0] = LAYOUT_universal(
-            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,           KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,           KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, NUBS_AT_GRV,
-            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-            KC_NO, KC_NO, TD(TD_TG1_TG3), KC_NO, TD(TD_KANA_EN),
-            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
+            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
+            KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
+            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NUBS
             ),
+          
           [1] = LAYOUT_universal(
-            _______, _______, _______, _______, _______, _______,          _______, KC_F7, KC_F8, _______, _______, _______,
-            _______, _______, _______, KC_UP, _______, _______,           _______, _______, KC_UP, _______, _______, _______,
-            _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,         _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
-            _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
+            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
+            KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
+            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NUBS
             ),
           [2] = LAYOUT_universal(
-            _______, _______, KC_7, KC_8, KC_9, _______,          _______, _______, _______, _______, _______, _______,
-            _______, _______, KC_4, KC_5, KC_6, _______,          _______, _______, _______, _______, _______, _______,
-            _______, _______, KC_1, KC_2, KC_3, _______,          _______, _______, _______, _______, _______, _______,
-            KC_0, KC_DOT, _______, _______, _______,            KC_DEL, _______, _______, _______, _______
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
+            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
+            KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
+            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
             ),
           [3] = LAYOUT_universal(
-            RGB_TOG, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______,
-            RGB_MOD, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______,
-            RGB_RMOD, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______,
-            QK_BOOT, KBC_RST, _______, _______, _______,           _______, _______, _______, KBC_RST, QK_BOOT
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
+            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
+            KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
+            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
             ),
         };
-
-/* =========================
- * Tap Dance Functions
- * ========================= */
-void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    if (state->interrupted || !state->pressed) {
-      layer_invert(1);  // 1回タップ
-    } else {
-      layer_invert(3);  // 長押し
-    }
-  } else if (state->count == 2) {
-    layer_invert(1);
-    layer_invert(3);
-  }
-}
-
-void kana_en_finished(tap_dance_state_t *state, void *user_data) {
-  // Mac 用：1回タップでかな、2回タップで英数
-  if (state->count == 1) {
-    tap_code(KC_LNG1);  // かな
-  } else if (state->count == 2) {
-    tap_code(KC_LNG2);  // 英数
-  }
-}
-
-/* =========================
- * Tap Dance Actions
- * ========================= */
-tap_dance_action_t tap_dance_actions[] = {
-          [TD_TG1_TG3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tg1_tg3_finished, NULL),
-          [TD_KANA_EN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kana_en_finished, NULL),
-        };
-
-/* =========================
- * process_record_user
- * ========================= */
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-  case NUBS_AT_GRV:
-    if (record->event.pressed) {
-      if (get_mods() & MOD_MASK_SHIFT) {
-        tap_code(KC_GRV);    // Shift + NUBS = 半角/全角
-      } else {
-        tap_code16(S(KC_2)); // NUBSのみ = @
-      }
-    }
-    return false;
-  }
-  return true;
-}
-
-/* =========================
- * COMBO (既存のまま)
- * ========================= */
+// clang-format on
 #ifdef COMBO_ENABLE
-enum combo_events { KL_BTN1, LS_BTN2, TO7_F7, SE_F8, RH_HOME, YH_HOME, HJ_END, F45_END };
-const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
-const uint16_t PROGMEM combo_ls[] = {KC_L, KC_SCLN, COMBO_END};
-const uint16_t PROGMEM combo_to7[] = {TO(0), KC_7, COMBO_END};
-const uint16_t PROGMEM combo_se[] = {KC_7, KC_8, COMBO_END};
-const uint16_t PROGMEM combo_rh[] = {KC_RBRC, KC_H, COMBO_END};
-const uint16_t PROGMEM combo_yh[] = {KC_NUHS, KC_H, COMBO_END};
-const uint16_t PROGMEM combo_hj[] = {KC_H, KC_J, COMBO_END};
-const uint16_t PROGMEM combo_f45[] = {KC_4, KC_5, COMBO_END};
+enum combo_events {
+  IO_DRAG_BTN1,
+  OP_DRAG_BTN2,
+  
+  QW_ESC,
+  MY_F7,
+  YU_F8,
+  
+  // ---- 追加分 ----
+  
+  // Mouse Btn1
+  MB1_KL,
+  MB1_90,
+  MB1_6SLSH,
+  
+  // Mouse Btn2
+  MB2_LSCLN,
+  MB2_SLSHSCLN,
+  MB2_0AST,
+  MB2_0SCLN,
+  
+  // F
+  F7_MINS7,
+  F8_78,
+  
+  // Home
+  HOME_RBH,
+  HOME_YENH,
+  HOME_RB4,
+  
+  // End
+  END_HJ,
+  END_45,
+  
+  // Arrow
+  UP_AS,
+  DOWN_ZX,
+  
+  // Page
+  PGUP_SD,
+  PGUP_SLEFT,
+  PGDN_XC,
+};
+
+// --- 既存 ---
+const uint16_t PROGMEM combo_io[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_op[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_qw[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM combo_my[] = {KC_MINS, KC_Y, COMBO_END};
+const uint16_t PROGMEM combo_yu[] = {KC_Y, KC_U, COMBO_END};
+// --- Mouse Btn1 ---
+const uint16_t PROGMEM combo_mb1_kl[]     = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_mb1_90[]     = {KC_9, KC_0, COMBO_END};
+const uint16_t PROGMEM combo_mb1_6slsh[]  = {KC_6, KC_SLSH, COMBO_END};
+
+// --- Mouse Btn2 ---
+const uint16_t PROGMEM combo_mb2_lscln[]  = {KC_L, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_mb2_slshsc[] = {KC_SLSH, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_8, COMBO_END};   // shift+8 = *
+const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN, COMBO_END};
+
+// --- F ---
+const uint16_t PROGMEM combo_f7_m7[]      = {KC_MINS, KC_7, COMBO_END};
+const uint16_t PROGMEM combo_f8_78[]      = {KC_7, KC_8, COMBO_END};
+
+// --- Home ---
+const uint16_t PROGMEM combo_home_rbh[]   = {KC_RBRC, KC_H, COMBO_END};
+const uint16_t PROGMEM combo_home_yenh[]  = {KC_BSLS, KC_H, COMBO_END}; // ¥
+const uint16_t PROGMEM combo_home_rb4[]   = {KC_RBRC, KC_4, COMBO_END};
+
+// --- End ---
+const uint16_t PROGMEM combo_end_hj[]     = {KC_H, KC_J, COMBO_END};
+const uint16_t PROGMEM combo_end_45[]     = {KC_4, KC_5, COMBO_END};
+
+// --- Arrow ---
+const uint16_t PROGMEM combo_up_as[]      = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM combo_down_zx[]    = {KC_Z, KC_X, COMBO_END};
+
+// --- Page ---
+const uint16_t PROGMEM combo_pgup_sd[]    = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM combo_pgup_sleft[] = {KC_S, KC_LEFT, COMBO_END};
+const uint16_t PROGMEM combo_pgdn_xc[]    = {KC_X, KC_C, COMBO_END};
 
 combo_t key_combos[] = {
-          [KL_BTN1]  = COMBO_ACTION(combo_kl),
-          [LS_BTN2]  = COMBO_ACTION(combo_ls),
-          [TO7_F7]   = COMBO_ACTION(combo_to7),
-          [SE_F8]    = COMBO_ACTION(combo_se),
-          [RH_HOME]  = COMBO_ACTION(combo_rh),
-          [YH_HOME]  = COMBO_ACTION(combo_yh),
-          [HJ_END]   = COMBO_ACTION(combo_hj),
-          [F45_END]  = COMBO_ACTION(combo_f45),
+          [IO_DRAG_BTN1] = COMBO_ACTION(combo_io),
+          [OP_DRAG_BTN2] = COMBO_ACTION(combo_op),
+          
+          [QW_ESC] = COMBO_ACTION(combo_qw),
+          [MY_F7]  = COMBO_ACTION(combo_my),
+          [YU_F8]  = COMBO_ACTION(combo_yu),
+          
+          // --- Mouse Btn1 ---
+          [MB1_KL]     = COMBO_ACTION(combo_mb1_kl),
+          [MB1_90]     = COMBO_ACTION(combo_mb1_90),
+          [MB1_6SLSH]  = COMBO_ACTION(combo_mb1_6slsh),
+          
+          // --- Mouse Btn2 ---
+          [MB2_LSCLN]  = COMBO_ACTION(combo_mb2_lscln),
+          [MB2_SLSHSCLN]= COMBO_ACTION(combo_mb2_slshsc),
+          [MB2_0AST]   = COMBO_ACTION(combo_mb2_0ast),
+          [MB2_0SCLN]  = COMBO_ACTION(combo_mb2_0scln),
+          
+          // --- F ---
+          [F7_MINS7]   = COMBO_ACTION(combo_f7_m7),
+          [F8_78]      = COMBO_ACTION(combo_f8_78),
+          
+          // --- Home / End ---
+          [HOME_RBH]   = COMBO_ACTION(combo_home_rbh),
+          [HOME_YENH]  = COMBO_ACTION(combo_home_yenh),
+          [HOME_RB4]   = COMBO_ACTION(combo_home_rb4),
+          [END_HJ]     = COMBO_ACTION(combo_end_hj),
+          [END_45]     = COMBO_ACTION(combo_end_45),
+          
+          // --- Arrow / Page ---
+          [UP_AS]      = COMBO_ACTION(combo_up_as),
+          [DOWN_ZX]    = COMBO_ACTION(combo_down_zx),
+          [PGUP_SD]    = COMBO_ACTION(combo_pgup_sd),
+          [PGUP_SLEFT] = COMBO_ACTION(combo_pgup_sleft),
+          [PGDN_XC]    = COMBO_ACTION(combo_pgdn_xc),
         };
 
+
+#endif
+
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  // Auto enable scroll mode when the highest layer is 3
+  keyball_set_scroll_mode(get_highest_layer(state) == 3);
+  return state;
+}
+
+#ifdef OLED_ENABLE
+
+#    include "lib/oledkit/oledkit.h"
+
+void oledkit_render_info_user(void) {
+  keyball_oled_render_keyinfo();
+  keyball_oled_render_ballinfo();
+  keyball_oled_render_layerinfo();
+}
+#endif
+
+#ifdef COMBO_ENABLE
 void process_combo_event(uint16_t combo_index, bool pressed) {
-  if (!pressed) return;
-  
   switch (combo_index) {
-  case KL_BTN1: tap_code(KC_MS_BTN1); break;
-  case LS_BTN2: tap_code(KC_MS_BTN2); break;
-  case TO7_F7:  tap_code(KC_F7); break;
-  case SE_F8:   tap_code(KC_F8); break;
-  case RH_HOME:
-  case YH_HOME: tap_code(KC_HOME); break;
-  case HJ_END:
-  case F45_END: tap_code(KC_END); break;
+    
+    // --- ドラッグ系（押下／解放 両方処理） ---
+  case IO_DRAG_BTN1:
+    if (pressed) {
+      register_code(KC_MS_BTN1);
+    } else {
+      unregister_code(KC_MS_BTN1);
+    }
+    break;
+    
+  case OP_DRAG_BTN2:
+    if (pressed) {
+      register_code(KC_MS_BTN2);
+    } else {
+      unregister_code(KC_MS_BTN2);
+    }
+    break;
+    
+    // --- 単発キー系（押下時のみ） ---
+  case QW_ESC:
+    if (pressed) tap_code(KC_ESC);
+    break;
+    
+  case MY_F7:
+    if (pressed) tap_code(KC_F7);
+    break;
+    
+  case YU_F8:
+    if (pressed) tap_code(KC_F8);
+    break;
+    
+    // --- Mouse Btn1（ドラッグ対応） ---
+  case MB1_KL:
+  case MB1_90:
+  case MB1_6SLSH:
+    if (pressed) register_code(KC_MS_BTN1);
+    else         unregister_code(KC_MS_BTN1);
+    break;
+    
+    // --- Mouse Btn2（ドラッグ対応） ---
+  case MB2_LSCLN:
+  case MB2_SLSHSCLN:
+  case MB2_0AST:
+  case MB2_0SCLN:
+    if (pressed) register_code(KC_MS_BTN2);
+    else         unregister_code(KC_MS_BTN2);
+    break;
+    
+    // --- F ---
+  case F7_MINS7:
+    if (pressed) tap_code(KC_F7);
+    break;
+  case F8_78:
+    if (pressed) tap_code(KC_F8);
+    break;
+    
+    // --- Home / End ---
+  case HOME_RBH:
+  case HOME_YENH:
+  case HOME_RB4:
+    if (pressed) tap_code(KC_HOME);
+    break;
+    
+  case END_HJ:
+  case END_45:
+    if (pressed) tap_code(KC_END);
+    break;
+    
+    // --- Arrow ---
+  case UP_AS:
+    if (pressed) tap_code(KC_UP);
+    break;
+  case DOWN_ZX:
+    if (pressed) tap_code(KC_DOWN);
+    break;
+    
+    // --- Page ---
+  case PGUP_SD:
+  case PGUP_SLEFT:
+    if (pressed) tap_code(KC_PGUP);
+    break;
+    
+  case PGDN_XC:
+    if (pressed) tap_code(KC_PGDN);
+    break;
   }
+}
+
+// =====================================================
+// Layer hook
+// =====================================================
+layer_state_t layer_state_set_user(layer_state_t state) {
+  keyball_set_scroll_mode(get_highest_layer(state) == 3);
+  return state;
+}
+
+// =====================================================
+// OLED
+// =====================================================
+#ifdef OLED_ENABLE
+#include "lib/oledkit/oledkit.h"
+void oledkit_render_info_user(void) {
+  keyball_oled_render_keyinfo();
+  keyball_oled_render_ballinfo();
+  keyball_oled_render_layerinfo();
 }
 #endif

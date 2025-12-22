@@ -2,6 +2,7 @@
 
 // =====================================================
 // Tap Dance 定義
+// Re map配列変更不可
 // =====================================================
 enum {
   TD_KANA_EISU,
@@ -181,6 +182,9 @@ combo_t key_combos[] = {
 
 #endif
 
+// =====================================================
+// Layer hook
+// =====================================================
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   // Auto enable scroll mode when the highest layer is 3
@@ -198,6 +202,10 @@ void oledkit_render_info_user(void) {
   keyball_oled_render_layerinfo();
 }
 #endif
+
+// =====================================================
+// COMBO
+// =====================================================
 
 #ifdef COMBO_ENABLE
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -288,14 +296,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     if (pressed) tap_code(KC_PGDN);
     break;
   }
-}
-
-// =====================================================
-// Layer hook
-// =====================================================
-layer_state_t layer_state_set_user(layer_state_t state) {
-  keyball_set_scroll_mode(get_highest_layer(state) == 3);
-  return state;
 }
 
 // =====================================================

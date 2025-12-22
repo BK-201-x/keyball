@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "quantum.h"
 
 // =====================================================
 // Tap Dance 定義
@@ -192,10 +193,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 
+// =====================================================
+// OLED
+// =====================================================
 #ifdef OLED_ENABLE
-
-#    include "lib/oledkit/oledkit.h"
-
+#include "lib/oledkit/oledkit.h"
 void oledkit_render_info_user(void) {
   keyball_oled_render_keyinfo();
   keyball_oled_render_ballinfo();
@@ -298,14 +300,4 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   }
 }
 
-// =====================================================
-// OLED
-// =====================================================
-#ifdef OLED_ENABLE
-#include "lib/oledkit/oledkit.h"
-void oledkit_render_info_user(void) {
-  keyball_oled_render_keyinfo();
-  keyball_oled_render_ballinfo();
-  keyball_oled_render_layerinfo();
-}
 #endif

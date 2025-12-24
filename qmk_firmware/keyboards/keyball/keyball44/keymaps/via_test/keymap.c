@@ -35,12 +35,17 @@ enum custom_keycodes {
 };
 
 static uint16_t lt13_timer;
+
 // =====================================================
-//layer切り替え
+// process_record_user
 // =====================================================
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-
+  
   switch (keycode) {
+    
+    // ---------------------
+    // Layer Tap (1 / 3)
+    // ---------------------
   case LT_1_3:
     if (record->event.pressed) {
       lt13_timer = timer_read();
@@ -52,15 +57,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
     return false;
-  }
-  return true;
-}
-
-// =====================================================
-//特殊キー
-// =====================================================
-  switch (keycode) {
     
+    // ---------------------
+    // 特殊キー①
+    // ---------------------
   case KC_SCLN_STAR:
     if (record->event.pressed) {
       uint8_t mods = get_mods() | get_oneshot_mods();
@@ -68,26 +68,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       clear_oneshot_mods();
       
       if (mods & MOD_MASK_SHIFT) {
-        tap_code16(S(KC_8));      // Shift + 8
+        tap_code16(S(KC_8));     // Shift + タップ → Shift + 8
       } else {
-        tap_code16(S(KC_SCLN));   // Shift + ;
+        tap_code16(S(KC_SCLN));  // タップ → Shift + ;
       }
       
       set_mods(mods);
     }
     return false;
     
+    // ---------------------
+    // 特殊キー②
+    // ---------------------
   case KC_2_ZEN:
     if (record->event.pressed) {
       uint8_t mods = get_mods() | get_oneshot_mods();
       clear_mods();
       clear_oneshot_mods();
       
-    if (mods & MOD_MASK_SHIFT) {
-      tap_code16(S(KC_QUOT));  // Shift＋タップ → Shift + KC_QUOT
-    } else {
-      tap_code16(S(KC_2));     // タップ → Shift + 2
-    }
+      if (mods & MOD_MASK_SHIFT) {
+        tap_code16(S(KC_QUOT));  // Shift＋タップ → Shift + KC_QUOT
+      } else {
+        tap_code16(S(KC_2));     // タップ → Shift + 2
+      }
       
       set_mods(mods);
     }

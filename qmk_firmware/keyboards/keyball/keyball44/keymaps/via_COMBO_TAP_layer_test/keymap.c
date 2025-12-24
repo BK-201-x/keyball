@@ -22,24 +22,16 @@ tap_dance_action_t tap_dance_actions[] = {
         };
 
 // =====================================================
-// キー追加
 // layer切り替え
-// : * Mac OS
-// @ "
 // Re map配列変更不可
 // =====================================================
 enum custom_keycodes {
   LT_1_3 = SAFE_RANGE,
-  KC_SCLN_STAR,
-  KC_S2_SQUOT,
 };
 
 static uint16_t lt13_timer;
-// =====================================================
-//layer切り替え
-// =====================================================
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
   case LT_1_3:
     if (record->event.pressed) {
@@ -53,47 +45,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return false;
   }
-  return true;
-}
-
-// =====================================================
-//特殊キー
-// =====================================================
-  switch (keycode) {
-    
-  case KC_SCLN_STAR:
-    if (record->event.pressed) {
-      uint8_t mods = get_mods() | get_oneshot_mods();
-      clear_mods();
-      clear_oneshot_mods();
-      
-      if (mods & MOD_MASK_SHIFT) {
-        tap_code16(S(KC_8));      // Shift + 8
-      } else {
-        tap_code16(S(KC_SCLN));   // Shift + ;
-      }
-      
-      set_mods(mods);
-    }
-    return false;
-    
-  case KC_2_ZEN:
-    if (record->event.pressed) {
-      uint8_t mods = get_mods() | get_oneshot_mods();
-      clear_mods();
-      clear_oneshot_mods();
-      
-    if (mods & MOD_MASK_SHIFT) {
-      tap_code16(S(KC_QUOT));  // Shift＋タップ → Shift + KC_QUOT
-    } else {
-      tap_code16(S(KC_2));     // タップ → Shift + 2
-    }
-      
-      set_mods(mods);
-    }
-    return false;
-  }
-  
   return true;
 }
 

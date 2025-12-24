@@ -101,7 +101,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       set_mods(mods);
     }
     return false;
-  }
   
   // ---------------------
   // 特殊キー③
@@ -113,7 +112,7 @@ case KC_MINS_CIRC:
     clear_oneshot_mods();
     
     if (mods & MOD_MASK_SHIFT) {
-      tap_code(KC_CIRC);   // Shift + tap → ^
+      tap_code16(KC_CIRC);   // Shift + tap → ^
     } else {
       tap_code(KC_MINS);   // tap → -
     }
@@ -159,7 +158,7 @@ case KC_SQUOT_SMINS:
     set_mods(mods);
   }
   return false;
-  
+  }
   return true;
 }
 

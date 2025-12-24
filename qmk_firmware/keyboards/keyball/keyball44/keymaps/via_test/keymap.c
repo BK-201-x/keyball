@@ -23,15 +23,21 @@ tap_dance_action_t tap_dance_actions[] = {
 
 // =====================================================
 // キー追加
+// Re map 配列変更不可
 // layer切り替え
-// : * Mac OS
-// @ "
-// Re map配列変更不可
+// ① : *
+// ② @ "
+// ③ - =
+// ④ ; +
+// ⑤ " _
 // =====================================================
 enum custom_keycodes {
   LT_1_3 = SAFE_RANGE,
-  KC_SCLN_STAR,
-  KC_S2_SQUOT,
+  KC_SCLN_STAR,             // ①
+  KC_S2_SQUOT,              // ②
+  KC_MINS_CIRC,             // ③
+  KC_SCLN_SCIRC,            // ④
+  KC_SQUOT_SMINS,           // ⑤
 };
 
 static uint16_t lt13_timer;
@@ -97,6 +103,63 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
   }
   
+  // ---------------------
+  // 特殊キー③
+  // ---------------------
+case KC_MINS_CIRC:
+  if (record->event.pressed) {
+    uint8_t mods = get_mods() | get_oneshot_mods();
+    clear_mods();
+    clear_oneshot_mods();
+    
+    if (mods & MOD_MASK_SHIFT) {
+      tap_code(KC_CIRC);   // Shift + tap → ^
+    } else {
+      tap_code(KC_MINS);   // tap → -
+    }
+    
+    set_mods(mods);
+  }
+  return false;
+  
+  // ---------------------
+  // 特殊キー④
+  // ---------------------
+case KC_SCLN_SCIRC:
+  if (record->event.pressed) {
+    uint8_t mods = get_mods() | get_oneshot_mods();
+    clear_mods();
+    clear_oneshot_mods();
+    
+    if (mods & MOD_MASK_SHIFT) {
+      tap_code16(S(KC_CIRC)); // Shift + tap → Shift + ^
+    } else {
+      tap_code(KC_SCLN);      // tap → ;
+    }
+    
+    set_mods(mods);
+  }
+  return false;
+  
+  // ---------------------
+  // 特殊キー⑤
+  // ---------------------
+case KC_SQUOT_SMINS:
+  if (record->event.pressed) {
+    uint8_t mods = get_mods() | get_oneshot_mods();
+    clear_mods();
+    clear_oneshot_mods();
+    
+    if (mods & MOD_MASK_SHIFT) {
+      tap_code16(S(KC_MINS)); // Shift + tap → Shift + -
+    } else {
+      tap_code16(S(KC_QUOT)); // tap → Shift + '
+    }
+    
+    set_mods(mods);
+  }
+  return false;
+  
   return true;
 }
 
@@ -142,11 +205,12 @@ enum combo_events {
   IO_DRAG_BTN1,
   OP_DRAG_BTN2,
   
+  // Mouse esc  
   QW_ESC,
+  
+  // Mouse F7,F8
   MY_F7,
   YU_F8,
-  
-  // ---- 追加分 ----
   
   // Mouse Btn1
   MB1_KL,
@@ -194,10 +258,10 @@ const uint16_t PROGMEM combo_mb1_90[]     = {KC_9, KC_0, COMBO_END};
 const uint16_t PROGMEM combo_mb1_6slsh[]  = {KC_6, KC_SLSH, COMBO_END};
 
 // --- Mouse Btn2 ---
-const uint16_t PROGMEM combo_mb2_lscln[]  = {KC_L, KC_SCLN, COMBO_END};
-const uint16_t PROGMEM combo_mb2_slshsc[] = {KC_SLSH, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_mb2_lscln[]  = {KC_L, KC_SCLN_STAR, COMBO_END};
+const uint16_t PROGMEM combo_mb2_slshsc[] = {KC_SLSH, KC_SCLN_STAR, COMBO_END};
 const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_8, COMBO_END};   // shift+8 = *
-const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN_STAR, COMBO_END};
 
 // --- F ---
 const uint16_t PROGMEM combo_f7_m7[]      = {KC_MINS, KC_7, COMBO_END};

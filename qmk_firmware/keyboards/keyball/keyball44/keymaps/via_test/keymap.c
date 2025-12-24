@@ -9,17 +9,24 @@ enum {
   TD_KANA_EISU,
 };
 
-void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    tap_code(KC_LNG1); // かな
-  } else {
-    tap_code(KC_LNG2); // 英数
-  }
-}
+static uint16_t lt13_timer;
 
-tap_dance_action_t tap_dance_actions[] = {
-          [TD_KANA_EISU] = ACTION_TAP_DANCE_FN(kana_eisu_finished),
-        };
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+  case LT_1_3:
+    if (record->event.pressed) {
+      lt13_timer = timer_read();
+    } else {
+      if (timer_elapsed(lt13_timer) < TAPPING_TERM) {
+        layer_move(1);  // タップ
+      } else {
+        layer_move(3);  // 長押し
+      }
+    }
+    return false;
+  }
+  return true;
+}
 
 // =====================================================
 // layer切り替え

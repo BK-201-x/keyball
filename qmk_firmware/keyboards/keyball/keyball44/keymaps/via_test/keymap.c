@@ -249,7 +249,7 @@ enum combo_events {
 const uint16_t PROGMEM combo_io[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_op[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_qw[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM combo_my[] = {KC_MINS, KC_Y, COMBO_END};
+const uint16_t PROGMEM combo_my[] = {KC_MINS_CIRC, KC_Y, COMBO_END};
 const uint16_t PROGMEM combo_yu[] = {KC_Y, KC_U, COMBO_END};
 // --- Mouse Btn1 ---
 const uint16_t PROGMEM combo_mb1_kl[]     = {KC_K, KC_L, COMBO_END};
@@ -263,13 +263,13 @@ const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_8, COMBO_END};   // shift+
 const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN_STAR, COMBO_END};
 
 // --- F ---
-const uint16_t PROGMEM combo_f7_m7[]      = {KC_MINS, KC_7, COMBO_END};
+const uint16_t PROGMEM combo_f7_m7[]      = {KC_MINS_CIRC, KC_7, COMBO_END};
 const uint16_t PROGMEM combo_f8_78[]      = {KC_7, KC_8, COMBO_END};
 
 // --- Home ---
-const uint16_t PROGMEM combo_home_rbh[]   = {KC_RBRC, KC_H, COMBO_END};
-const uint16_t PROGMEM combo_home_yenh[]  = {KC_BSLS, KC_H, COMBO_END}; // ¥
-const uint16_t PROGMEM combo_home_rb4[]   = {KC_RBRC, KC_4, COMBO_END};
+const uint16_t PROGMEM combo_home_rbh[]   = {KC_SCLN_SCIRC, KC_H, COMBO_END};
+const uint16_t PROGMEM combo_home_yenh[]  = {KC_SCLN, KC_H, COMBO_END};
+const uint16_t PROGMEM combo_home_rb4[]   = {KC_SCLN_SCIRC, KC_4, COMBO_END};
 
 // --- End ---
 const uint16_t PROGMEM combo_end_hj[]     = {KC_H, KC_J, COMBO_END};

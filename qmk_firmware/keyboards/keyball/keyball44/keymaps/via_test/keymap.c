@@ -80,7 +80,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // ---------------------
     // 特殊キー②
     // ---------------------
-  case KC_2_ZEN:
+  case :KC_S2_SQUOT
     if (record->event.pressed) {
       uint8_t mods = get_mods() | get_oneshot_mods();
       clear_mods();

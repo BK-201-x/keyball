@@ -7,7 +7,6 @@
 // =====================================================
 enum {
   TD_KANA_EISU,
-  TD_TG1_TG3,
 };
 
 void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
@@ -18,23 +17,32 @@ void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
   }
 }
 
-void tg1_tg3_finished(tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    if (state->interrupted || !state->pressed) {
-      layer_invert(1);
-    } else {
-      layer_invert(3);
-    }
-  } else if (state->count == 2) {
-    layer_invert(1);
-    layer_invert(3);
-  }
-}
-
 tap_dance_action_t tap_dance_actions[] = {
           [TD_KANA_EISU] = ACTION_TAP_DANCE_FN(kana_eisu_finished),
-          [TD_TG1_TG3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tg1_tg3_finished, NULL),
         };
+
+// =====================================================
+// layer切り替え
+// Re map配列変更不可
+// =====================================================
+enum custom_keycodes {
+  LT_1_3 = SAFE_RANGE,
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+  case LT_1_3:
+    if (!record->event.pressed) {
+      if (record->tap.count && !record->tap.interrupted) {
+        layer_move(1);  // タップ
+      } else {
+        layer_move(3);  // 長押し
+      }
+    }
+    return false;
+  }
+  return true;
+}
 
 // =====================================================
 // Keymaps
@@ -47,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
             KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
             KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
-            KC_NO, KC_NO, TD(TD_TG1_TG3), KC_NO, KC_NO, KC_NO
+            LT_1_3, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
             ),
           
           [1] = LAYOUT_universal(

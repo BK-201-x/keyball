@@ -9,6 +9,7 @@ enum {
   TD_KANA_EISU,
 };
 
+
 void kana_eisu_finished(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     tap_code(KC_LNG1); // かな

@@ -169,7 +169,7 @@ case KC_SQUOT_SMINS:
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           
           [0] = LAYOUT_universal(
-            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_EQL ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
             KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
             KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
@@ -177,11 +177,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             ),
           
           [1] = LAYOUT_universal(
-            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
-            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
-            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
+            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
             KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
-            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
+            KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_S2_SQUOT
             ),
           [2] = LAYOUT_universal(
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
@@ -259,7 +259,7 @@ const uint16_t PROGMEM combo_mb1_6slsh[]  = {KC_6, KC_SLSH, COMBO_END};
 // --- Mouse Btn2 ---
 const uint16_t PROGMEM combo_mb2_lscln[]  = {KC_L, KC_SCLN_STAR, COMBO_END};
 const uint16_t PROGMEM combo_mb2_slshsc[] = {KC_SLSH, KC_SCLN_STAR, COMBO_END};
-const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_8, COMBO_END};   // shift+8 = *
+const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_0, COMBO_END};
 const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN_STAR, COMBO_END};
 
 // --- F ---

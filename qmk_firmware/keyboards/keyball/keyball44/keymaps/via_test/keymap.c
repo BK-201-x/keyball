@@ -112,7 +112,7 @@ case KC_MINS_CIRC:
     clear_oneshot_mods();
     
     if (mods & MOD_MASK_SHIFT) {
-      tap_code16(KC_CIRC);   // Shift + tap → ^
+        tap_code16(KC_EQL);   // Shift + tap → ^
     } else {
       tap_code(KC_MINS);   // tap → -
     }
@@ -131,7 +131,7 @@ case KC_SCLN_SCIRC:
     clear_oneshot_mods();
     
     if (mods & MOD_MASK_SHIFT) {
-      tap_code16(S(KC_CIRC)); // Shift + tap → Shift + ^
+        tap_code16(S(KC_EQL)); // Shift + tap → Shift + ^
     } else {
       tap_code(KC_SCLN);      // tap → ;
     }

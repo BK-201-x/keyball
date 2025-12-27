@@ -169,7 +169,7 @@ case KC_SQUOT_SMINS:
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           
           [0] = LAYOUT_universal(
-            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_CIRC ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_EQL ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
             KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
             KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,

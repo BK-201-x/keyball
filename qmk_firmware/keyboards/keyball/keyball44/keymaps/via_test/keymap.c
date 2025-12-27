@@ -259,7 +259,7 @@ const uint16_t PROGMEM combo_mb1_6slsh[]  = {KC_6, KC_SLSH, COMBO_END};
 // --- Mouse Btn2 ---
 const uint16_t PROGMEM combo_mb2_lscln[]  = {KC_L, KC_SCLN_STAR, COMBO_END};
 const uint16_t PROGMEM combo_mb2_slshsc[] = {KC_SLSH, KC_SCLN_STAR, COMBO_END};
-const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_0, COMBO_END};
+const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN_STAR, COMBO_END};
 
 // --- F ---

@@ -223,6 +223,7 @@ enum combo_events {
   MB2_0SCLN,
   
   // F
+  F7_M7,//テスト
   F7_MINS7,
   F8_78,
   
@@ -263,8 +264,8 @@ const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN_STAR, COMBO_END};
 
 // --- F ---
+const uint16_t PROGMEM combo_f7_mins[] = {KC_MINS_CIRC, KC_Y, COMBO_END};//テスト
 const uint16_t PROGMEM combo_f7_m7[]      = {KC_MINS_CIRC, KC_7, COMBO_END};
-const uint16_t PROGMEM combo_my[] = {KC_MINS_CIRC, KC_Y, COMBO_END};//テスト
 const uint16_t PROGMEM combo_f8_78[]      = {KC_7, KC_8, COMBO_END};
 
 // --- Home ---
@@ -305,6 +306,7 @@ combo_t key_combos[] = {
           [MB2_0SCLN]  = COMBO_ACTION(combo_mb2_0scln),
           
           // --- F ---
+          [F7_M7]      = COMBO_ACTION(combo_f7_mins),//テスト
           [F7_MINS7]   = COMBO_ACTION(combo_f7_m7),
           [F8_78]      = COMBO_ACTION(combo_f8_78),
           

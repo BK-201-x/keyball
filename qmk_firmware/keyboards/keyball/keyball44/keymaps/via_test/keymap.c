@@ -264,6 +264,7 @@ const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN_STAR, COMBO_END};
 
 // --- F ---
 const uint16_t PROGMEM combo_f7_m7[]      = {KC_MINS_CIRC, KC_7, COMBO_END};
+const uint16_t PROGMEM combo_my[] = {KC_MINS_CIRC, KC_Y, COMBO_END};//テスト
 const uint16_t PROGMEM combo_f8_78[]      = {KC_7, KC_8, COMBO_END};
 
 // --- Home ---

@@ -249,7 +249,7 @@ enum combo_events {
 const uint16_t PROGMEM combo_io[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_op[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_qw[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM combo_my[] = {KC_MINS_CIRC, KC_Y, COMBO_END};
+const uint16_t PROGMEM combo_my[] = {KC_MINS, KC_Y, COMBO_END};
 const uint16_t PROGMEM combo_yu[] = {KC_Y, KC_U, COMBO_END};
 // --- Mouse Btn1 ---
 const uint16_t PROGMEM combo_mb1_kl[]     = {KC_K, KC_L, COMBO_END};

@@ -264,7 +264,7 @@ const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN_STAR, COMBO_END};
 
 // --- F ---
-const uint16_t PROGMEM combo_f7_mins[] = {KC_MINS_CIRC, KC_Y, COMBO_END};//テスト
+const uint16_t PROGMEM combo_f7_mins[]    = {KC_MINS_CIRC, KC_Y, COMBO_END};//テスト
 const uint16_t PROGMEM combo_f7_m7[]      = {KC_MINS_CIRC, KC_7, COMBO_END};
 const uint16_t PROGMEM combo_f8_78[]      = {KC_7, KC_8, COMBO_END};
 
@@ -406,6 +406,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     break;
     
     // --- F ---
+  case F7_M7:
+    if (pressed) tap_code(KC_F7);
+    break;
   case F7_MINS7:
     if (pressed) tap_code(KC_F7);
     break;

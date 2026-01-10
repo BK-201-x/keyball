@@ -30,6 +30,7 @@ tap_dance_action_t tap_dance_actions[] = {
 // ③ - =
 // ④ ; +
 // ⑤ " _
+// ⑥ " _ windows専用
 // =====================================================
 enum custom_keycodes {
   LT_1_3 = SAFE_RANGE,
@@ -38,6 +39,7 @@ enum custom_keycodes {
   KC_MINS_CIRC,             // ③
   KC_SCLN_SCIRC,            // ④
   KC_SQUOT_SMINS,           // ⑤
+  KC_DQUO_MINS,             // ⑥
 };
 
 static uint16_t lt13_timer;
@@ -159,6 +161,26 @@ case KC_SQUOT_SMINS:
   }
   return false;
   }
+  
+  // ---------------------
+  // 特殊キー⑥ windows
+  // ---------------------
+case KC_DQUO_MINS:
+  if (record->event.pressed) {
+    uint8_t mods = get_mods() | get_oneshot_mods();
+    clear_mods();
+    clear_oneshot_mods();
+    
+    if (mods & MOD_MASK_SHIFT) {
+      tap_code16(S(KC_MINS)); // Shift + tap → Shift + -
+    } else {
+      tap_code16(KC_QUOT); // tap → "
+    }
+    
+    set_mods(mods);
+  }
+  return false;
+}
   return true;
 }
 
@@ -171,7 +193,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           [0] = LAYOUT_universal(
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
-            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
+          KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_DQUO_MINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
             KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
           LT_1_3, KC_NO, KC_NO, KC_NO, KC_NO, KC_S2_SQUOT
             ),
@@ -179,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           [1] = LAYOUT_universal(
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
-            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
+          KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_DQUO_MINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
             KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
             KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_S2_SQUOT
             ),

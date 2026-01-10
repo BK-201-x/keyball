@@ -160,7 +160,6 @@ case KC_SQUOT_SMINS:
     set_mods(mods);
   }
   return false;
-  }
   
   // ---------------------
   // 特殊キー⑥ windows
@@ -186,6 +185,9 @@ case KC_DQUO_MINS:
 
 // =====================================================
 // Keymaps
+//左右で下記keymapの変更が必要
+//  KC_SQUOT_SMINS ⑤ Mac版
+//  KC_DQUO_MINS   ⑥ windows版
 // =====================================================
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {

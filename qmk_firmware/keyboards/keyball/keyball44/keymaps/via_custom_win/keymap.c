@@ -171,9 +171,9 @@ case KC_DQUO_MINS:
     clear_oneshot_mods();
     
     if (mods & MOD_MASK_SHIFT) {
-      tap_code16(S(KC_MINS)); // Shift + tap → Shift + -
+      tap_code16(S(KC_INT1))); // Shift + tap → Shift + -
     } else {
-      tap_code16(KC_QUOT); // tap → "
+      tap_code16(S(KC_2)); // tap → "
     }
     
     set_mods(mods);
@@ -195,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           [0] = LAYOUT_universal(
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
-            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_DQUO_MINS , KC_INT1 , S(KC_INT1) , KC_NO , KC_NO, KC_NO,
+          KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_DQUO_MINS , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
             KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
           LT_1_3, KC_NO, KC_NO, KC_NO, KC_NO, KC_S2_SQUOT
             ),

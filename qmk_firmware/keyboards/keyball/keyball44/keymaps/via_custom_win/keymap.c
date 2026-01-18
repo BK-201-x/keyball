@@ -171,7 +171,7 @@ case KC_DQUO_MINS:
     clear_oneshot_mods();
     
     if (mods & MOD_MASK_SHIFT) {
-      tap_code16(S(KC_INT1))); // Shift + tap → Shift + -
+      tap_code16(S(KC_INT1)); // Shift + tap → Shift + -
     } else {
       tap_code16(S(KC_2)); // tap → "
     }

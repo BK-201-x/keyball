@@ -30,6 +30,7 @@ tap_dance_action_t tap_dance_actions[] = {
 // ③ - =
 // ④ ; +
 // ⑤ " _
+// ⑥ " _ windows専用
 // =====================================================
 enum custom_keycodes {
   LT_1_3 = SAFE_RANGE,
@@ -38,6 +39,7 @@ enum custom_keycodes {
   KC_MINS_CIRC,             // ③
   KC_SCLN_SCIRC,            // ④
   KC_SQUOT_SMINS,           // ⑤
+  KC_DQUO_MINS,             // ⑥
 };
 
 static uint16_t lt13_timer;
@@ -158,12 +160,34 @@ case KC_SQUOT_SMINS:
     set_mods(mods);
   }
   return false;
+  
+  // ---------------------
+  // 特殊キー⑥ windows
+  // ---------------------
+case KC_DQUO_MINS:
+  if (record->event.pressed) {
+    uint8_t mods = get_mods() | get_oneshot_mods();
+    clear_mods();
+    clear_oneshot_mods();
+    
+    if (mods & MOD_MASK_SHIFT) {
+      tap_code16(S(KC_INT1)); // Shift + tap → Shift + -
+    } else {
+      tap_code16(S(KC_2)); // tap → "
+    }
+    
+    set_mods(mods);
   }
+  return false;
+}
   return true;
 }
 
 // =====================================================
 // Keymaps
+//左右で下記keymapの変更が必要
+//  KC_SQUOT_SMINS ⑤ Mac版
+//  KC_DQUO_MINS   ⑥ windows版
 // =====================================================
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -171,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           [0] = LAYOUT_universal(
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
-            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
+            KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
             KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
           LT_1_3, KC_NO, KC_NO, KC_NO, KC_NO, KC_S2_SQUOT
             ),
@@ -223,7 +247,7 @@ enum combo_events {
   MB2_0SCLN,
   
   // F
-  F7_M7,
+  F7_M7,//テスト
   F7_MINS7,
   F8_78,
   
@@ -264,7 +288,7 @@ const uint16_t PROGMEM combo_mb2_0ast[]   = {KC_0, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_mb2_0scln[]  = {KC_0, KC_SCLN_STAR, COMBO_END};
 
 // --- F ---
-const uint16_t PROGMEM combo_f7_mins[]    = {KC_MINS_CIRC, KC_Y, COMBO_END};
+const uint16_t PROGMEM combo_f7_mins[]    = {KC_MINS_CIRC, KC_Y, COMBO_END};//テスト
 const uint16_t PROGMEM combo_f7_m7[]      = {KC_MINS_CIRC, KC_7, COMBO_END};
 const uint16_t PROGMEM combo_f8_78[]      = {KC_7, KC_8, COMBO_END};
 
@@ -306,7 +330,7 @@ combo_t key_combos[] = {
           [MB2_0SCLN]  = COMBO_ACTION(combo_mb2_0scln),
           
           // --- F ---
-          [F7_M7]      = COMBO_ACTION(combo_f7_mins),
+          [F7_M7]      = COMBO_ACTION(combo_f7_mins),//テスト
           [F7_MINS7]   = COMBO_ACTION(combo_f7_m7),
           [F8_78]      = COMBO_ACTION(combo_f8_78),
           

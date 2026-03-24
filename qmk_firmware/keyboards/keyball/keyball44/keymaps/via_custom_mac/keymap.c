@@ -193,32 +193,32 @@ case KC_DQUO_MINS:
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           
           [0] = LAYOUT_universal(
-            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_S2_SQUOT ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
             KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
-            KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
+            TD(TD_KANA_EISU), TD(TD_KANA_EISU), KC_NO, KC_NO,
           LT_1_3, KC_NO, KC_NO, KC_NO, KC_NO, KC_S2_SQUOT
             ),
           
           [1] = LAYOUT_universal(
-            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
+            KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_S2_SQUOT ,                         KC_MINS_CIRC , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SCLN_SCIRC , KC_NO , KC_NO , KC_NO , KC_NO, KC_SCLN_STAR,
             KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_SQUOT_SMINS , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
-            KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
+            TD(TD_KANA_EISU), TD(TD_KANA_EISU), KC_NO, KC_NO,
             KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_S2_SQUOT
             ),
           [2] = LAYOUT_universal(
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
             KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
-            KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
+            TD(TD_KANA_EISU), TD(TD_KANA_EISU), KC_NO, KC_NO,
             KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
             ),
           [3] = LAYOUT_universal(
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
             KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO , KC_NO , KC_NO, KC_NO,
             KC_NO, KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,                         KC_NO , KC_NO , KC_NO, KC_NO , KC_NO, KC_NO,
-            KC_NO, TD(TD_KANA_EISU), KC_NO, KC_NO,
+            TD(TD_KANA_EISU), TD(TD_KANA_EISU), KC_NO, KC_NO,
             KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
             ),
         };
